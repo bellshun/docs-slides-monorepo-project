@@ -1,0 +1,21 @@
+site_name: Dev Monorepo Template
+theme:
+  name: material
+  features:
+    - navigation.instant
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+hooks:
+  - hooks/slides_index.py
+nav:
+  - Home: index.md
+  - ガイド:
+    - セットアップ: guide/setup.md
+    - スライドの追加: guide/add-slide.md
+    - ドキュメントの追加: guide/add-doc.md
+  - Slides: slides/index.md

@@ -1,0 +1,3 @@
+{
+  "markdown.marp.themes": ["./slides/src/themes/blue-theme.css"]
+}

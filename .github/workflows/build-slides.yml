@@ -1,0 +1,60 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'slides/src/**'
+      - 'mkdocs.yml'
+      - 'hooks/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies (Node.js)
+        run: npm ci
+
+      - name: Build HTML slides
+        run: |
+          for dir in slides/src/slides/*/; do
+            name=$(basename "$dir")
+            echo "Building $name"
+            npx marp "$dir/content.md" \
+              --theme-set ./slides/src/themes/*.css \
+              -o "docs/slides/$name/index.html" \
+              --allow-local-files
+
+            if [ -d "$dir/images" ]; then
+              mkdir -p "docs/slides/$name/images"
+              cp -r "$dir/images/"* "docs/slides/$name/images/"
+            fi
+          done
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Deploy MkDocs to GitHub Pages
+        run: uv run mkdocs gh-deploy --force

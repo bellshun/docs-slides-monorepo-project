@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Marp build output (CI が docs/slides/ に直接出力するため slides/dist/ は不使用)
+docs/slides/
+
+# Virtual environments
+.venv
+
+# Node.js
+node_modules/

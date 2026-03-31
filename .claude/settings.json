@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run mkdocs build*)",
+      "Bash(uv run mkdocs serve*)",
+      "Bash(bash slides/scripts/build-local.sh*)"
+    ]
+  }
+}
